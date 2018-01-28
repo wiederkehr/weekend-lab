@@ -1,102 +1,110 @@
 import Link from 'next/link'
+import { csv } from 'd3'
+import { LineChart, Line } from 'recharts'
 import { App } from '../components/App/App'
 import { Layout } from '../components/Layout/Layout'
 import { Head } from '../components/Head/Head'
+import { Page, PageHeader, PageBody, PageFooter } from '../components/Page/Page'
+import { Section } from '../components/Section/Section'
+import { Scroller, Sticky, StickyGraphic, StickyRuler, Scrolly, ScrollySection } from '../components/Scroller/Scroller'
+import { GenderBalance } from '../components/Visualizations/GenderBalance'
+import { RacingYears } from '../components/Visualizations/RacingYears'
+import { RankingOverTime } from '../components/Visualizations/RankingOverTime'
+import { RankingOverSeason } from '../components/Visualizations/RankingOverSeason'
 
-export default () => (
-  <App>
-    <Head title='' />
-    <div className='Page'>
-      <ul>
-        <li>
-          <h2>Global Foreign Aid</h2>
-          <p>AidData, an organization based at the College of William &amp; Mary, has compiled a dataset of more than 1.5 million foreign aid projects between 1947 and 2013. Together, the dataset accounts for more than $7 trillion in commitments from 96 donors such as the U.S. government, UNICEF, the Nordic Development Fund, and the World Bank. AidData also publishes geospatial datasets and a data user guide. Previously: ForeignAssistance.gov, featured Jan. 13.</p>
-          <ul>
-            <li>
-              <Link href="http://aiddata.org/about-aiddatas-work">
-                <a>http://aiddata.org/about-aiddatas-work</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="http://aiddata.org/country-level-research-datasets">
-                <a>http://aiddata.org/country-level-research-datasets</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="http://aiddata.org/subnational-geospatial-research-datasets">
-                <a>http://aiddata.org/subnational-geospatial-research-datasets</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="http://aiddata.org/data-user-guide">
-                <a>http://aiddata.org/data-user-guide</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="http://beta.foreignassistance.gov/">
-                <a>http://beta.foreignassistance.gov/</a>
-              </Link>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <h2>The Ghibliverse</h2>
-          <p>The unofficial Studio Ghibli API contains structured information about the famed Japanese animation studio’s films (e.g., Princess Mononoke and Spirited Away), plus the characters, locations, and vehicles featured in them. You can also download a single file containing all the data.</p>
-          <ul>
-            <li>
-              <Link href="https://ghibliapi.herokuapp.com/">
-                <a>https://ghibliapi.herokuapp.com/</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="https://github.com/janaipakos/ghibliapi/blob/master/data.json">
-                <a>https://github.com/janaipakos/ghibliapi/blob/master/data.json</a>
-              </Link>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <h2>Cherry Blossoms</h2>
-          <p>Yasuyuki Aono, an associate professor at Osaka Prefecture University, has collected the historical flowering dates of Kyoto’s Prunus jamasakura cherry trees going all the way back to the 9th century. The dataset is based on “many diaries and chronicles written by Emperors, aristocrats, [governors] and monks,” Aono writes. The dates are those “on which cherry blossom viewing parties had been held or full flowerings had been observed.” Over the past century, Kyoto’s cherry trees have been blooming earlier and earlier. Related: @bbgblossoms, a Twitter bot that tracks the status of the Brooklyn Botanic Garden’s 152 cherry trees.</p>
-          <ul>
-            <li>
-              <Link href="http://atmenv.envi.osakafu-u.ac.jp/aono/kyophenotemp4/">
-                <a>http://atmenv.envi.osakafu-u.ac.jp/aono/kyophenotemp4/</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="https://www.bbg.org/collections/cherries">
-                <a>https://www.bbg.org/collections/cherries</a>
-              </Link>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <h2>Nobel Prizes</h2>
-          <p>The prestigious Scandinavian awards have an API. The official documentation explains it succinctly: “The data is free to use and contains information about who has been awarded the Nobel Prize, when, in what prize category and the motivation, as well as basic information about the Nobel Laureates such as birth data and the affiliation at the time of the award. The data is regularly updated as the information on Nobelprize.org is updated, including at the time of announcements of new Laureates.” Related: “These Nobel Prize Winners Show Why Immigration Is So Important For American Science,” by my colleague Peter Aldhous. Plus: The R code supporting Peter's analysis.</p>
-          <ul>
-            <li>
-              <Link href="http://atmenv.envi.osakafu-u.ac.jp/aono/kyophenotemp4/">
-                <a>http://atmenv.envi.osakafu-u.ac.jp/aono/kyophenotemp4/</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="https://www.bbg.org/collections/cherries">
-                <a>https://www.bbg.org/collections/cherries</a>
-              </Link>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-    <style jsx>{`
-      .Page {
+const countryNames = {
+  IE: 'Ireland',
+  IU: 'Ireland or United Kingdom',
+  UK: 'United Kingdom'
+}
+
+export default class Index extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { rankings: null }
+  }
+
+  componentWillMount() {
+    this.loadData()
+  }
+
+  loadData() {
+    csv('./static/greyhound-data-1.3.csv')
+    .row((row) => (
+      {
+        Gold: parseInt(row['1st']),
+        Silver: parseInt(row['2nd']),
+        Bronze: parseInt(row['3rd']),
+        Birthland: countryNames[row.Birthland],
+        Birthyear: parseInt(row.Birthyear),
+        Dam: row.Dam,
+        Link: row.Link,
+        Name: row.Name,
+        Races: parseInt(row.Races),
+        Rank: parseInt(row.Rank),
+        Sex: row.Sex,
+        Sire: row.Sire,
+        Standingland: countryNames[row.Standingland],
+        WinDistance: parseInt(row.WinDistance.replace(' m', '')),
+        WinPercent: parseInt(row.WinPercent.replace('%', '')),
+        Wins: parseInt(row.Wins),
+        Year: parseInt(row.Year),
+        Age: parseInt(row.Year - row.Birthyear)
       }
-    `}</style>
-  </App>
-)
+    ))
+    .get((data) => {
+      this.setState({ rankings: data })
+    })
+  }
 
-https://www.nobelprize.org/nobel_organizations/nobelmedia/nobelprize_org/developer/
-https://nobelprize.readme.io/v1.0
-https://www.buzzfeed.com/peteraldhous/immigration-and-science
-https://buzzfeednews.github.io/2017-01-immigration-and-science/
+  render() {
+    return (
+      <App>
+        <Head title='Derby Champions' />
+        <Page>
+          <PageHeader title='Derby Champions' />
+          <PageBody>
+            <Scroller>
+              <StickyRuler />
+              <Sticky>
+                <StickyGraphic>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </StickyGraphic>
+              </Sticky>
+              <Scrolly>
+                <ScrollySection>
+                  <Section title='All Dogs, All Races'>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                  </Section>
+                </ScrollySection>
+                <ScrollySection>
+                  <Section title='Gender Balance'>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                  </Section>
+                </ScrollySection>
+                <ScrollySection>
+                  <Section title='Gender Distribution'>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                  </Section>
+                </ScrollySection>
+                <ScrollySection>
+                  <Section title='Repeated Winners'>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                  </Section>
+                </ScrollySection>
+                <ScrollySection>
+                  <Section title='Parents & Kids'>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                  </Section>
+                </ScrollySection>
+              </Scrolly>
+            </Scroller>
+          </PageBody>
+          <PageFooter>
+            © 2018 Anna & Benjamin
+          </PageFooter>
+        </Page>
+      </App>
+    )
+  }
+}

@@ -10,16 +10,17 @@ export class App extends React.Component {
         </Layout>
         <style jsx>{`
           :global(:root) {
-            --white:        #FFFFFF;
-            --snow-white:   #F9F9F9;
-            --bright-white: #F2F2F2;
-            --smoke-white:  #EBEBEB;
-            --bright-grey:  #DDDDDD;
-            --light-grey:   #BBBBBB;
-            --regular-grey: #999999;
-            --mid-grey:     #666666;
-            --dark-grey:    #333333;
-            --black:        #000000;
+            --white:  hsla(0,0%,100%,1);
+            --grey-1: hsla(0,0%,90%,1);
+            --grey-2: hsla(0,0%,80%,1);
+            --grey-3: hsla(0,0%,70%,1);
+            --grey-4: hsla(0,0%,60%,1);
+            --grey-5: hsla(0,0%,50%,1);
+            --grey-6: hsla(0,0%,40%,1);
+            --grey-7: hsla(0,0%,30%,1);
+            --grey-8: hsla(0,0%,20%,1);
+            --grey-9: hsla(0,0%,10%,1);
+            --black:  hsla(0,0%,0%,1);
           }
 
           :global(*) {

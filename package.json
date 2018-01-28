@@ -1,13 +1,17 @@
 {
-  "name": "create-next-example-app",
+  "name": "weekend-lab",
   "scripts": {
     "dev": "next",
     "build": "next build",
     "start": "next start"
   },
   "dependencies": {
+    "d3": "^4.12.2",
     "next": "^4.2.3",
     "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "react-dom": "^16.2.0",
+    "react-track": "^0.4.4",
+    "recharts": "^1.0.0-beta.9",
+    "scrollama": "^1.0.0"
   }
 }
