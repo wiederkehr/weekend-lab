@@ -6,11 +6,8 @@ import { Layout } from '../components/Layout/Layout'
 import { Head } from '../components/Head/Head'
 import { Page, PageHeader, PageBody, PageFooter } from '../components/Page/Page'
 import { Section } from '../components/Section/Section'
-import { Scroller, Sticky, StickyGraphic, StickyRuler, Scrolly, ScrollySection } from '../components/Scroller/Scroller'
-import { GenderBalance } from '../components/Visualizations/GenderBalance'
-import { RacingYears } from '../components/Visualizations/RacingYears'
-import { RankingOverTime } from '../components/Visualizations/RankingOverTime'
-import { RankingOverSeason } from '../components/Visualizations/RankingOverSeason'
+import { Scroller, Sticky, StickyGraphic, StickyRuler, Scrolly, ScrollyView } from '../components/Scroller/Scroller'
+import { Champions } from '../components/Visualizations/Champions'
 
 const countryNames = {
   IE: 'Ireland',
@@ -21,7 +18,8 @@ const countryNames = {
 export default class Index extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { rankings: null }
+    this.state = { rankings: null, view: false }
+    this.onViewEnter = this.onViewEnter.bind(this)
   }
 
   componentWillMount() {
@@ -57,6 +55,10 @@ export default class Index extends React.Component {
     })
   }
 
+  onViewEnter(view) {
+    this.setState({ view: view })
+  }
+
   render() {
     return (
       <App>
@@ -65,38 +67,40 @@ export default class Index extends React.Component {
           <PageHeader title='Derby Champions' />
           <PageBody>
             <Scroller>
-              <StickyRuler />
+              <StickyRuler top='25%' />
+              <StickyRuler top='50%' />
+              <StickyRuler top='75%' />
               <Sticky>
                 <StickyGraphic>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                  <Champions data={this.state.rankings} view={this.state.view}/>
                 </StickyGraphic>
               </Sticky>
               <Scrolly>
-                <ScrollySection>
-                  <Section title='All Dogs, All Races'>
+                <ScrollyView view='A' onViewEnter={this.onViewEnter}>
+                  <Section title='A: All Dogs, All Races'>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                   </Section>
-                </ScrollySection>
-                <ScrollySection>
-                  <Section title='Gender Balance'>
+                </ScrollyView>
+                <ScrollyView view='B' onViewEnter={this.onViewEnter}>
+                  <Section title='B: Gender Balance'>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                   </Section>
-                </ScrollySection>
-                <ScrollySection>
-                  <Section title='Gender Distribution'>
+                </ScrollyView>
+                <ScrollyView view='C' onViewEnter={this.onViewEnter}>
+                  <Section title='C: Age Distribution'>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                   </Section>
-                </ScrollySection>
-                <ScrollySection>
-                  <Section title='Repeated Winners'>
+                </ScrollyView>
+                <ScrollyView view='D' onViewEnter={this.onViewEnter}>
+                  <Section title='D: Repeated Winners'>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                   </Section>
-                </ScrollySection>
-                <ScrollySection>
-                  <Section title='Parents & Kids'>
+                </ScrollyView>
+                <ScrollyView view='E' onViewEnter={this.onViewEnter}>
+                  <Section title='E: Parents & Kids'>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                   </Section>
-                </ScrollySection>
+                </ScrollyView>
               </Scrolly>
             </Scroller>
           </PageBody>
