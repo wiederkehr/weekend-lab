@@ -1,5 +1,4 @@
-import { TrackDocument, TrackedDiv, Track } from 'react-track'
-import { topTop } from 'react-track/tracking-formulas'
+import Waypoint from 'react-waypoint'
 
 export const Scroller = (props) => (
   <div className='Scroller'>
@@ -39,6 +38,8 @@ export const StickyGraphic = (props) => (
         background-color: var(--grey-4);
         position: absolute;
         top: 50%;
+        width: 100%;
+        padding: 2rem;
         transform: translateY(-50%);
       }
       `}
@@ -53,7 +54,7 @@ export const StickyRuler = (props) => (
         height: 1px;
         left: 0px;
         position: fixed;
-        top: 50%;
+        top: ${props.top};
         width: 100%;
         z-index: 1000;
       }
@@ -74,17 +75,37 @@ export const Scrolly = (props) => (
     </style>
   </div>
 )
-export const ScrollySection = (props) => (
-  <TrackDocument formulas={[topTop]}>
-    {topTop =>
-      <TrackedDiv formulas={[topTop]}>
-        {(posTopTop) => (
-          <div>
-            <div style={{background:'gold', position:'absolute'}}>{posTopTop}</div>
-            <div>{props.children}</div>
-          </div>
-        )}
-      </TrackedDiv>
+
+export class ScrollyView extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      visible: false,
+      position: 0
     }
-  </TrackDocument>
-)
+    this.handleWaypointEnter = this.handleWaypointEnter.bind(this)
+    this.handleWaypointLeave = this.handleWaypointLeave.bind(this)
+  }
+  handleWaypointEnter() {
+    if(this.props.onViewEnter) {
+      this.props.onViewEnter(this.props.view)
+    }
+    this.setState({ visible: true })
+  }
+  handleWaypointLeave() {
+    this.setState({ visible: false })
+  }
+  render() {
+    return (
+      <Waypoint
+          onEnter={this.handleWaypointEnter}
+          onLeave={this.handleWaypointLeave}
+          topOffset='49.999%'
+          bottomOffset='50%'>
+          <div style={{background: this.state.visible ? 'gold' : 'grey'}}>
+          {this.props.children}
+        </div>
+      </Waypoint>
+    )
+  }
+}
