@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { csv } from 'd3'
-import { LineChart, Line } from 'recharts'
+import ContainerDimensions from 'react-container-dimensions'
 import { App } from '../components/App/App'
 import { Layout } from '../components/Layout/Layout'
 import { Head } from '../components/Head/Head'
@@ -72,7 +72,9 @@ export default class Index extends React.Component {
               <StickyRuler top='75%' />
               <Sticky>
                 <StickyGraphic>
-                  <Champions data={this.state.rankings} view={this.state.view}/>
+                  <ContainerDimensions>
+                    <Champions data={this.state.rankings} view={this.state.view}/>
+                  </ContainerDimensions>
                 </StickyGraphic>
               </Sticky>
               <Scrolly>

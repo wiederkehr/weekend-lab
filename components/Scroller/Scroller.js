@@ -35,11 +35,9 @@ export const StickyGraphic = (props) => (
     {props.children}
     <style jsx>{`
       .StickyGraphic {
-        background-color: var(--grey-4);
         position: absolute;
         top: 50%;
         width: 100%;
-        padding: 2rem;
         transform: translateY(-50%);
       }
       `}
@@ -50,7 +48,7 @@ export const StickyRuler = (props) => (
   <div className='StickyRuler'>
     <style jsx>{`
       .StickyRuler {
-        border-bottom: 1px dashed red;
+        border-bottom: 1px dashed hsla(0,100%,0%,0.5);
         height: 1px;
         left: 0px;
         position: fixed;
@@ -67,7 +65,6 @@ export const Scrolly = (props) => (
     {props.children}
     <style jsx>{`
       .Scrolly {
-        background: var(--grey-3);
         position: relative;
         max-width: 32rem;
       }
