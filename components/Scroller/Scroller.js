@@ -35,10 +35,11 @@ export const StickyGraphic = (props) => (
     {props.children}
     <style jsx>{`
       .StickyGraphic {
+        height: 50vh;
         position: absolute;
         top: 50%;
-        width: 100%;
         transform: translateY(-50%);
+        width: 100%;
       }
       `}
     </style>

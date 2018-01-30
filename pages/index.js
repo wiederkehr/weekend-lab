@@ -1,6 +1,6 @@
 import Link from 'next/link'
-import { csv } from 'd3'
 import ContainerDimensions from 'react-container-dimensions'
+import { csv } from 'd3'
 import { App } from '../components/App/App'
 import { Layout } from '../components/Layout/Layout'
 import { Head } from '../components/Head/Head'
@@ -60,6 +60,10 @@ export default class Index extends React.Component {
   }
 
   render() {
+
+    const loader = <Loader text='Loading…' />
+    const chart = <Champions data={this.state.rankings} view={this.state.view} />
+
     return (
       <App>
         <Head title='Derby Champions' />
@@ -73,7 +77,7 @@ export default class Index extends React.Component {
               <Sticky>
                 <StickyGraphic>
                   <ContainerDimensions>
-                    <Champions data={this.state.rankings} view={this.state.view}/>
+                    {this.state.rankings ? chart : loader}
                   </ContainerDimensions>
                 </StickyGraphic>
               </Sticky>
@@ -114,3 +118,9 @@ export default class Index extends React.Component {
     )
   }
 }
+
+export const Loader = (props) => (
+  <div className='Loader'>
+    <p>{props.text}</p>
+  </div>
+)
