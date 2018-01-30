@@ -15,14 +15,14 @@ export class Axis extends React.Component {
     switch(this.props.orient) {
       case 'bottom':
         axis = axisBottom()
-          .ticks(10)
+          .ticks(this.props.ticks ? this.props.ticks : 10)
           .tickSize(this.props.tickSize)
           .tickPadding(10)
           .scale(this.props.scale)
         break
       case 'left':
         axis = axisLeft()
-          .ticks(10)
+          .ticks(this.props.ticks ? this.props.ticks : 10)
           .tickSize(this.props.tickSize)
           .tickPadding(10)
           .scale(this.props.scale)

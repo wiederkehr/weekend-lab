@@ -6,8 +6,9 @@ import { Layout } from '../components/Layout/Layout'
 import { Head } from '../components/Head/Head'
 import { Page, PageHeader, PageBody, PageFooter } from '../components/Page/Page'
 import { Section } from '../components/Section/Section'
+import { Tooltip } from '../components/Tooltip/Tooltip'
 import { Scroller, Sticky, StickyGraphic, StickyRuler, Scrolly, ScrollyView } from '../components/Scroller/Scroller'
-import { Champions } from '../components/Visualizations/Champions'
+import { ChampionsChart } from '../components/Visualizations/ChampionsChart'
 
 const countryNames = {
   IE: 'Ireland',
@@ -18,14 +19,14 @@ const countryNames = {
 export default class Index extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { rankings: null, view: false }
+    this.state = { rankings: false, view: 'A', tooltip: null, hovered: null }
     this.onViewEnter = this.onViewEnter.bind(this)
+    this.showTooltip = this.showTooltip.bind(this)
+    this.hideTooltip = this.hideTooltip.bind(this)
   }
-
   componentWillMount() {
     this.loadData()
   }
-
   loadData() {
     csv('./static/greyhound-data-1.3.csv')
     .row((row) => (
@@ -54,16 +55,33 @@ export default class Index extends React.Component {
       this.setState({ rankings: data })
     })
   }
-
   onViewEnter(view) {
     this.setState({ view: view })
   }
-
+  showTooltip(e) {
+    const tooltip = {
+      id: e.target.getAttribute('data-id'),
+      name: e.target.getAttribute('data-name'),
+      rank: e.target.getAttribute('data-rank'),
+      sex: e.target.getAttribute('data-sex'),
+      age: e.target.getAttribute('data-age'),
+      left: e.target.getAttribute('data-x') + "px",
+      top: e.target.getAttribute('data-y') + "px"
+    }
+    this.setState({ tooltip: tooltip, hovered: tooltip.id })
+  }
+  hideTooltip() {
+    this.setState({ tooltip: null, hovered: null })
+  }
   render() {
 
-    const loader = <Loader text='Loading…' />
-    const chart = <Champions data={this.state.rankings} view={this.state.view} />
-
+    const chartProps = {
+      view: this.state.view,
+      data: this.state.rankings,
+      hovered: this.state.hovered,
+      onMouseOver: this.showTooltip,
+      onMouseOut: this.hideTooltip
+    }
     return (
       <App>
         <Head title='Derby Champions' />
@@ -71,14 +89,13 @@ export default class Index extends React.Component {
           <PageHeader title='Derby Champions' />
           <PageBody>
             <Scroller>
-              <StickyRuler top='25%' />
               <StickyRuler top='50%' />
-              <StickyRuler top='75%' />
               <Sticky>
                 <StickyGraphic>
                   <ContainerDimensions>
-                    {this.state.rankings ? chart : loader}
+                    {this.state.rankings ? <ChampionsChart {...chartProps} /> : <Loader text='Loading…' />}
                   </ContainerDimensions>
+                  { this.state.tooltip ? <Tooltip {...this.state.tooltip}></Tooltip> : null }
                 </StickyGraphic>
               </Sticky>
               <Scrolly>

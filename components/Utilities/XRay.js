@@ -5,7 +5,7 @@ export const XRay = (props) => (
     <li>Height: {props.height}</li>
     <style jsx>{`
       ul {
-        background: rgba(0,0,0,0.1);
+        background: rgba(250,215,0,0.2);
         font-size: 0.75rem;
         margin: 0;
         padding: 0;

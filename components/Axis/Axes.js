@@ -1,6 +1,6 @@
 import { Axis } from './Axis'
 
-export const XYAxis = (props) => {
+export const Axes = (props) => {
   const xSettings = {
     translate: 'translate(0,' + props.height + ')',
     scale: props.xScale,
@@ -11,6 +11,7 @@ export const XYAxis = (props) => {
     translate: 'translate(0, 0)',
     scale: props.yScale,
     orient: 'left',
+    ticks: 1,
     tickSize: -(props.width)
   }
   return (

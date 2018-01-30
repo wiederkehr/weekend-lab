@@ -36,6 +36,7 @@ export const StickyGraphic = (props) => (
     <style jsx>{`
       .StickyGraphic {
         height: 50vh;
+        min-height: 600px;
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
@@ -49,7 +50,7 @@ export const StickyRuler = (props) => (
   <div className='StickyRuler'>
     <style jsx>{`
       .StickyRuler {
-        border-bottom: 1px dashed hsla(0,100%,0%,0.5);
+        border-bottom: 1px dashed hsla(0,100%,0%,0.2);
         height: 1px;
         left: 0px;
         position: fixed;
@@ -100,7 +101,7 @@ export class ScrollyView extends React.Component {
           onLeave={this.handleWaypointLeave}
           topOffset='49.999%'
           bottomOffset='50%'>
-          <div style={{background: this.state.visible ? 'gold' : 'grey'}}>
+          <div style={{background: this.state.visible ? 'var(--white)' : 'var(--grey-2)'}}>
           {this.props.children}
         </div>
       </Waypoint>
