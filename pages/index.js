@@ -8,7 +8,7 @@ import { Page, PageHeader, PageBody, PageFooter } from '../components/Page/Page'
 import { Section } from '../components/Section/Section'
 import { Tooltip } from '../components/Tooltip/Tooltip'
 import { Scroller, Sticky, StickyGraphic, StickyRuler, Scrolly, ScrollyView } from '../components/Scroller/Scroller'
-import { Rankings } from '../components/Visualizations/Rankings'
+import { Rankings } from '../components/Visualization/Rankings'
 
 const countryNames = {
   IE: 'Ireland',
@@ -56,7 +56,7 @@ export default class Index extends React.Component {
     })
   }
   onViewEnter(view) {
-    // this.setState({ view: view })
+    this.setState({ view: view })
   }
   showTooltip(target) {
     const tooltip = {
@@ -92,7 +92,7 @@ export default class Index extends React.Component {
               <Sticky>
                 <StickyGraphic>
                   <ContainerDimensions>
-                    {this.state.rankings ? <Rankings {...rankingsProps} /> : <Loader text='Loading…' />}
+                    { this.state.rankings ? <Rankings {...rankingsProps} /> : <Loader text='Loading…' /> }
                   </ContainerDimensions>
                   { this.state.tooltip ? <Tooltip {...this.state.tooltip}></Tooltip> : null }
                 </StickyGraphic>

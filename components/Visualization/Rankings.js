@@ -32,10 +32,10 @@ export class Rankings extends React.Component {
       scales: scales,
     }
   }
-  componentWillReceiveProps(props) {
-    if(this.props.width !== props.width) {
-      const dimensions = this.calculateDimensions(props, this.state.margins)
-      const scales = this.calculateScales(props, this.state.extents, dimensions)
+  componentWillReceiveProps(nextProps) {
+    if(this.props.width !== nextProps.width) {
+      const dimensions = this.calculateDimensions(nextProps, this.state.margins)
+      const scales = this.calculateScales(nextProps, this.state.extents, dimensions)
       this.setState({
         dimensions: dimensions,
         scales: scales

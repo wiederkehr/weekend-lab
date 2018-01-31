@@ -1,10 +1,6 @@
 import classNames from 'classnames'
 
-export const Champions = (props) => (
-  <g>{ props.data.map((d, i) => <Champion champion={d} key={i} {...props} />) }</g>
-)
-
-class Champion extends React.Component {
+export class Champion extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -20,44 +16,18 @@ class Champion extends React.Component {
     }
   }
   onMouseOver = (e) => {
-    this.props.onMouseOver(e.target)
+    // this.props.onMouseOver(e.target)
     this.setState({active: true})
     console.log('onMouseOver')
     return
   }
   onMouseOut = (e) => {
-    this.props.onMouseOver(e.target)
+    // this.props.onMouseOver(e.target)
     this.setState({active: false})
     console.log('onMouseOut')
     return
   }
   render = () => {
-    const frontCircleProps = {
-      'data-name': this.props.champion.Name,
-      'data-rank': this.props.champion.Rank,
-      'data-age': this.props.champion.Age,
-      'data-sex': this.props.champion.Sex,
-      'data-x': this.state.positions.positionX,
-      'data-y': this.state.positions.positionY,
-      onMouseOver: this.onMouseOver,
-      onMouseOut: this.onMouseOut,
-      className: 'Circle__Front'
-    }
-    const centerCircleProps = {
-      className: classNames({
-        'Circle__Center': true,
-        'Circle__Center--active': this.state.active
-      })
-    }
-    const backCircleProps = {
-      className: classNames({
-        'Circle__Back': true,
-        'Circle__Back--active': this.state.active
-      })
-    }
-    const groupProps = {
-      transform: `translate(${this.state.positions.positionX},${this.state.positions.positionY})`
-    }
 
     let color = null
     let sort = null
@@ -77,6 +47,34 @@ class Champion extends React.Component {
       break
     }
 
+    const frontCircleProps = {
+      'data-name': this.props.champion.Name,
+      'data-rank': this.props.champion.Rank,
+      'data-age': this.props.champion.Age,
+      'data-sex': this.props.champion.Sex,
+      'data-x': this.state.positions.positionX,
+      'data-y': this.state.positions.positionY,
+      onMouseOver: this.onMouseOver,
+      onMouseOut: this.onMouseOut,
+      className: 'Circle__Front'
+    }
+    const centerCircleProps = {
+      fill: color,
+      className: classNames({
+        'Circle__Center': true,
+        'Circle__Center--active': this.state.active
+      })
+    }
+    const backCircleProps = {
+      fill: color,
+      className: classNames({
+        'Circle__Back': true,
+        'Circle__Back--active': this.state.active
+      })
+    }
+    const groupProps = {
+      transform: `translate(${this.state.positions.positionX},${this.state.positions.positionY})`
+    }
     return (
       <g {...groupProps} >
         <circle {...backCircleProps} />
@@ -89,18 +87,16 @@ class Champion extends React.Component {
             cursor: pointer;
           }
           .Circle__Center {
-            fill: ${color};
             r: 2;
             transition: color 200ms;
           }
           .Circle__Back {
-            fill: ${color};
             opacity: 0.4;
             r: 2;
             transition: r 200ms;
           }
           .Circle__Back.Circle__Back--active {
-            r: 8;
+            r: 12;
           }
         `}</style>
       </g>

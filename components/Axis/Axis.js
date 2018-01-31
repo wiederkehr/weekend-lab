@@ -1,6 +1,11 @@
 import { select, axisBottom, axisLeft } from 'd3'
 
 export class Axis extends React.Component {
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return true
+  }
+
   componentDidUpdate() {
     this.renderAxis()
   }
