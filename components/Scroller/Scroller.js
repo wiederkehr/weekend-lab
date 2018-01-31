@@ -79,29 +79,27 @@ export class ScrollyView extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      visible: false,
-      position: 0
+      view: props.view,
+      active: false
     }
-    this.handleWaypointEnter = this.handleWaypointEnter.bind(this)
-    this.handleWaypointLeave = this.handleWaypointLeave.bind(this)
+    this.onWaypointEnter = this.onWaypointEnter.bind(this)
+    this.onWaypointLeave = this.onWaypointLeave.bind(this)
   }
-  handleWaypointEnter() {
-    if(this.props.onViewEnter) {
-      this.props.onViewEnter(this.props.view)
-    }
-    this.setState({ visible: true })
+  onWaypointEnter() {
+    this.props.onViewEnter(this.state.view)
+    this.setState({ active: true })
   }
-  handleWaypointLeave() {
-    this.setState({ visible: false })
+  onWaypointLeave() {
+    this.setState({ active: false })
   }
   render() {
     return (
       <Waypoint
-          onEnter={this.handleWaypointEnter}
-          onLeave={this.handleWaypointLeave}
+          onEnter={this.onWaypointEnter}
+          onLeave={this.onWaypointLeave}
           topOffset='49.999%'
           bottomOffset='50%'>
-          <div style={{background: this.state.visible ? 'var(--white)' : 'var(--grey-2)'}}>
+          <div style={{background: this.state.active ? 'var(--white)' : 'var(--grey-2)'}}>
           {this.props.children}
         </div>
       </Waypoint>

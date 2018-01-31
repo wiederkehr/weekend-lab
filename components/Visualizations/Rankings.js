@@ -1,11 +1,10 @@
 import PropTypes from 'prop-types'
-import { map, nest, scaleLinear, scaleOrdinal, scalePoint, max, min, interpolateHcl } from 'd3'
+import { map, nest, max, min, scaleLinear, scaleOrdinal, scalePoint, interpolateHcl } from 'd3'
 import { XRay } from '../Utilities/XRay'
-import { Spinner } from '../Spinner/Spinner'
 import { Champions } from './Champions'
 import { Axes } from '../Axis/Axes'
 
-export class ChampionsChart extends React.Component {
+export class Rankings extends React.Component {
   constructor(props) {
     super(props)
     const margins = {
@@ -64,7 +63,23 @@ export class ChampionsChart extends React.Component {
     }
   }
   render() {
-    console.log('Render ChampionsChart!')
+    console.log('Render Rankings!')
+    const axesProps = {
+      height: this.state.dimensions.height,
+      width: this.state.dimensions.width,
+      xScale: this.state.scales.yearScale,
+      yScale: this.state.scales.rankScale
+    }
+    const championsProps = {
+      view: this.props.view,
+      data: this.props.data,
+      xScale: this.state.scales.yearScale,
+      yScale: this.state.scales.rankScale,
+      ageScale: this.state.scales.ageScale,
+      sexScale: this.state.scales.sexScale,
+      onMouseOut: this.props.onMouseOut,
+      onMouseOver: this.props.onMouseOver
+    }
     return (
       <div className='Champions'>
         <XRay {...this.props}/>
@@ -72,21 +87,8 @@ export class ChampionsChart extends React.Component {
           width={this.state.dimensions.width + this.state.margins.left + this.state.margins.right}
           height={this.state.dimensions.height + this.state.margins.top + this.state.margins.bottom}>
           <g transform={`translate(${this.state.margins.left}, ${this.state.margins.top})`}>
-            <Axes
-              height={this.state.dimensions.height}
-              width={this.state.dimensions.width}
-              xScale={this.state.scales.yearScale}
-              yScale={this.state.scales.rankScale} />
-            <Champions
-              view={this.props.view}
-              data={this.props.data}
-              xScale={this.state.scales.yearScale}
-              yScale={this.state.scales.rankScale}
-              ageScale={this.state.scales.ageScale}
-              sexScale={this.state.scales.sexScale}
-              hovered={this.props.hovered}
-              onMouseOut={this.props.onMouseOut}
-              onMouseOver={this.props.onMouseOver} />
+            <Axes {...axesProps} />
+            <Champions {...championsProps} />
           </g>
         </svg>
         <style jsx>{`
@@ -102,7 +104,7 @@ export class ChampionsChart extends React.Component {
   }
 }
 
-ChampionsChart.propTypes = {
+Rankings.propTypes = {
   data: PropTypes.array.isRequired,
   view: PropTypes.string.isRequired
 }

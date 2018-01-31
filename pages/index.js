@@ -8,7 +8,7 @@ import { Page, PageHeader, PageBody, PageFooter } from '../components/Page/Page'
 import { Section } from '../components/Section/Section'
 import { Tooltip } from '../components/Tooltip/Tooltip'
 import { Scroller, Sticky, StickyGraphic, StickyRuler, Scrolly, ScrollyView } from '../components/Scroller/Scroller'
-import { ChampionsChart } from '../components/Visualizations/ChampionsChart'
+import { Rankings } from '../components/Visualizations/Rankings'
 
 const countryNames = {
   IE: 'Ireland',
@@ -19,7 +19,7 @@ const countryNames = {
 export default class Index extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { rankings: false, view: 'A', tooltip: null, hovered: null }
+    this.state = { rankings: null, view: 'A', tooltip: null }
     this.onViewEnter = this.onViewEnter.bind(this)
     this.showTooltip = this.showTooltip.bind(this)
     this.hideTooltip = this.hideTooltip.bind(this)
@@ -56,32 +56,31 @@ export default class Index extends React.Component {
     })
   }
   onViewEnter(view) {
-    this.setState({ view: view })
+    // this.setState({ view: view })
   }
-  showTooltip(e) {
+  showTooltip(target) {
     const tooltip = {
-      id: e.target.getAttribute('data-id'),
-      name: e.target.getAttribute('data-name'),
-      rank: e.target.getAttribute('data-rank'),
-      sex: e.target.getAttribute('data-sex'),
-      age: e.target.getAttribute('data-age'),
-      left: e.target.getAttribute('data-x') + "px",
-      top: e.target.getAttribute('data-y') + "px"
+      name: target.getAttribute('data-name'),
+      rank: target.getAttribute('data-rank'),
+      sex:  target.getAttribute('data-sex'),
+      age:  target.getAttribute('data-age'),
+      left: target.getAttribute('data-x') + "px",
+      top:  target.getAttribute('data-y') + "px"
     }
-    this.setState({ tooltip: tooltip, hovered: tooltip.id })
+    this.setState({ tooltip: tooltip })
   }
   hideTooltip() {
-    this.setState({ tooltip: null, hovered: null })
+    this.setState({ tooltip: null })
   }
   render() {
 
-    const chartProps = {
+    const rankingsProps = {
       view: this.state.view,
       data: this.state.rankings,
-      hovered: this.state.hovered,
       onMouseOver: this.showTooltip,
       onMouseOut: this.hideTooltip
     }
+
     return (
       <App>
         <Head title='Derby Champions' />
@@ -93,7 +92,7 @@ export default class Index extends React.Component {
               <Sticky>
                 <StickyGraphic>
                   <ContainerDimensions>
-                    {this.state.rankings ? <ChampionsChart {...chartProps} /> : <Loader text='Loading…' />}
+                    {this.state.rankings ? <Rankings {...rankingsProps} /> : <Loader text='Loading…' />}
                   </ContainerDimensions>
                   { this.state.tooltip ? <Tooltip {...this.state.tooltip}></Tooltip> : null }
                 </StickyGraphic>
