@@ -1,18 +1,11 @@
 export const Tooltip = (props) => {
   return (
-    <div className={'Tooltip'} style={{ left: props.left, top: props.top}}>
+    <div className={'Tooltip'} style={{ left: props.left ? props.left : 0, top: props.top ? props.top : 0}}>
       <div className='Tooltip__Section Tooltip__Section--first'>
-        <span className='Tooltip__Id'>{ props.id }</span>
         <span className='Tooltip__Title'>{ props.name }</span>
       </div>
       <div className='Tooltip__Section'>
         <table className='Tooltip__Table'>
-          <thead>
-            <tr>
-              <th className='Tooltip__Table__TH'>Hours</th>
-              <th className='Tooltip__Table__TH Tooltip__Table__TH--right'>Hours</th>
-            </tr>
-          </thead>
           <tbody>
             <tr>
               <td className='Tooltip__Table__TD'>Age</td>
@@ -71,26 +64,6 @@ export const Tooltip = (props) => {
         .Tooltip__Title {
           display: block;
           font-weight: 500;
-        }
-
-        .Tooltip__Id {
-          color: darkgrey;
-          display: block;
-          font-size: 0.75em;
-          font-weight: normal;
-        }
-
-        .Tooltip__Flag {
-          background: orange;
-          border-radius: 2px;
-          color: white;
-          font-size: 0.875rem;
-          line-height: 1;
-          padding: 1px 3px 0;
-          position: absolute;
-          right: 20px;
-          top: 20px;
-          text-transform: uppercase;
         }
 
         .Tooltip__Table {
