@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 
-export class Champion extends React.Component {
+export class Champion extends React.PureComponent {
   constructor(props) {
     super(props)
     this.state = {
@@ -16,15 +16,13 @@ export class Champion extends React.Component {
     }
   }
   onMouseOver = (e) => {
-    // this.props.onMouseOver(e.target)
+    this.props.onMouseOver(e.target)
     this.setState({active: true})
-    console.log('onMouseOver')
     return
   }
-  onMouseOut = (e) => {
-    // this.props.onMouseOver(e.target)
+  onMouseOut = () => {
+    this.props.onMouseOut()
     this.setState({active: false})
-    console.log('onMouseOut')
     return
   }
   render = () => {
@@ -34,7 +32,7 @@ export class Champion extends React.Component {
 
     switch(this.props.view) {
       case 'A':
-        color = '#000000'
+        color = 'DARKOLIVEGREEN'
       break
       case 'B':
         color = this.state.colors.sexColor
@@ -42,8 +40,14 @@ export class Champion extends React.Component {
       case 'C':
         color = this.state.colors.ageColor
       break
+      case 'D':
+        color = 'REBECCAPURPLE'
+      break
+      case 'E':
+        color = 'ORANGERED'
+      break
       default:
-        color = '#000000'
+        color = 'TEAL'
       break
     }
 
@@ -56,17 +60,18 @@ export class Champion extends React.Component {
       'data-y': this.state.positions.positionY,
       onMouseOver: this.onMouseOver,
       onMouseOut: this.onMouseOut,
+      style: { fill: 'transparent' },
       className: 'Circle__Front'
     }
     const centerCircleProps = {
-      fill: color,
+      style: { fill: color },
       className: classNames({
         'Circle__Center': true,
         'Circle__Center--active': this.state.active
       })
     }
     const backCircleProps = {
-      fill: color,
+      style: { fill: color },
       className: classNames({
         'Circle__Back': true,
         'Circle__Back--active': this.state.active
@@ -82,18 +87,17 @@ export class Champion extends React.Component {
         <circle {...frontCircleProps} />
         <style jsx>{`
           .Circle__Front {
-            fill: transparent;
             r: 8;
             cursor: pointer;
           }
           .Circle__Center {
             r: 2;
-            transition: color 200ms;
+            transition: fill 200ms;
           }
           .Circle__Back {
             opacity: 0.4;
             r: 2;
-            transition: r 200ms;
+            transition: fill 200ms, r 200ms;
           }
           .Circle__Back.Circle__Back--active {
             r: 12;

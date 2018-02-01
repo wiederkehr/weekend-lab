@@ -4,7 +4,7 @@ import { XRay } from '../Utilities/XRay'
 import { Champions } from './Champions'
 import { Axes } from '../Axis/Axes'
 
-export class Rankings extends React.Component {
+export class Rankings extends React.PureComponent {
   constructor(props) {
     super(props)
     const margins = {

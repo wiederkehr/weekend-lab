@@ -64,8 +64,8 @@ export default class Index extends React.Component {
       rank: target.getAttribute('data-rank'),
       sex:  target.getAttribute('data-sex'),
       age:  target.getAttribute('data-age'),
-      left: target.getAttribute('data-x') + "px",
-      top:  target.getAttribute('data-y') + "px"
+      left: parseInt(target.getAttribute('data-x')) + 40, // Margin-left inside SVG
+      top:  parseInt(target.getAttribute('data-y')) + 20 // Margin-top inside SVG
     }
     this.setState({ tooltip: tooltip })
   }

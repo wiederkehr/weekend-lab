@@ -1,6 +1,6 @@
 import { Champion } from './Champion'
 
-export class Champions extends React.Component {
+export class Champions extends React.PureComponent {
   constructor(props) {
     super(props)
   }
