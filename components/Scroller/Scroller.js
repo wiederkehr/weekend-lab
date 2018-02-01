@@ -25,6 +25,7 @@ export const Sticky = (props) => (
         right: 0;
         top: 0;
         width: 60%;
+        z-index: 20;
       }
       `}
     </style>
@@ -69,6 +70,7 @@ export const Scrolly = (props) => (
       .Scrolly {
         position: relative;
         max-width: 32rem;
+        z-index: 10;
       }
       `}
     </style>
