@@ -1,18 +1,10 @@
-import PropTypes from 'prop-types'
-import { map, nest, max, min, scaleLinear, scaleOrdinal, scalePoint, interpolateHcl } from 'd3'
-import { XRay } from '../Utilities/XRay'
-import { Champions } from './Champions'
-import { Axes } from '../Axis/Axes'
+import { map, max, min, scaleLinear, scaleOrdinal, scalePoint, interpolateHcl } from 'd3'
+import { Dots } from './Dots'
 
-export class Rankings extends React.PureComponent {
+export class TransitionTrial extends React.Component {
   constructor(props) {
     super(props)
-    const margins = {
-      top: 20,
-      right: 20,
-      bottom: 20,
-      left: 40
-    }
+    const margins = { top: 20, right: 20, bottom: 20, left: 20 }
     const extents = {
       sexes: map(props.data, (d) => d.Sex).keys(),
       years: map(props.data, (d) => d.Year).keys(),
@@ -32,20 +24,10 @@ export class Rankings extends React.PureComponent {
       scales: scales,
     }
   }
-  componentWillReceiveProps(nextProps) {
-    if(this.props.width !== nextProps.width) {
-      const dimensions = this.calculateDimensions(nextProps, this.state.margins)
-      const scales = this.calculateScales(nextProps, this.state.extents, dimensions)
-      this.setState({
-        dimensions: dimensions,
-        scales: scales
-      })
-    }
-  }
   calculateDimensions(props, margins) {
     return {
-      width: props.width - margins.left - margins.right,
-      height: props.height - margins.top - margins.bottom
+      width: 500 - margins.left - margins.right,
+      height: 500 - margins.top - margins.bottom
     }
   }
   calculateScales(props, extents, dimensions) {
@@ -62,38 +44,28 @@ export class Rankings extends React.PureComponent {
 
     }
   }
-  render() {
-    console.log('Render Rankings!')
-    const axesProps = {
-      height: this.state.dimensions.height,
-      width: this.state.dimensions.width,
-      xScale: this.state.scales.yearScale,
-      yScale: this.state.scales.rankScale
-    }
-    const championsProps = {
+  render = () => {
+    console.log('Render Transition!')
+    const dotsProps = {
       view: this.props.view,
       data: this.props.data,
       xScale: this.state.scales.yearScale,
       yScale: this.state.scales.rankScale,
       ageScale: this.state.scales.ageScale,
       sexScale: this.state.scales.sexScale,
-      onMouseOut: this.props.onMouseOut,
-      onMouseOver: this.props.onMouseOver
     }
     return (
-      <div className='Champions'>
-        <XRay {...this.props}/>
+      <div className='Transition'>
         <svg
           width={this.state.dimensions.width + this.state.margins.left + this.state.margins.right}
           height={this.state.dimensions.height + this.state.margins.top + this.state.margins.bottom}>
           <g transform={`translate(${this.state.margins.left}, ${this.state.margins.top})`}>
-            <Axes {...axesProps} />
-            <Champions {...championsProps} />
+            <Dots {...dotsProps} />
           </g>
         </svg>
         <style jsx>{`
-          .Champions {
-            background: var(--grey-4);
+          .Transition {
+            background: var(--grey-1);
             line-height: 1;
             position: relative;
           }
@@ -102,9 +74,4 @@ export class Rankings extends React.PureComponent {
       </div>
     )
   }
-}
-
-Rankings.propTypes = {
-  data: PropTypes.array.isRequired,
-  view: PropTypes.number.isRequired
 }

@@ -36,7 +36,7 @@ export const StickyGraphic = (props) => (
     {props.children}
     <style jsx>{`
       .StickyGraphic {
-        height: 50vh;
+        height: 80vh;
         min-height: 600px;
         position: absolute;
         top: 50%;

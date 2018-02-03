@@ -1,5 +1,4 @@
 import classNames from 'classnames'
-import { CSSTransition } from 'react-transition-group'
 
 export class Champion extends React.PureComponent {
   constructor(props) {
@@ -61,7 +60,6 @@ export class Champion extends React.PureComponent {
       'data-y': this.state.positions.positionY,
       onMouseOver: this.onMouseOver,
       onMouseOut: this.onMouseOut,
-      style: { fill: 'transparent' },
       className: 'Circle__Front'
     }
     const centerCircleProps = {
@@ -88,16 +86,18 @@ export class Champion extends React.PureComponent {
         <circle {...frontCircleProps} />
         <style jsx>{`
           .Circle__Front {
-            r: 8;
             cursor: pointer;
+            fill: transparent;
+            r: 8;
           }
           .Circle__Center {
             r: 2;
+            transition: fill 2000ms ease-in-out;
           }
           .Circle__Back {
             opacity: 0.4;
             r: 2;
-            transition: r 200ms;
+            transition: fill 2000ms ease-in-out, r 200ms ease-in-out;
           }
           .Circle__Back.Circle__Back--hover {
             r: 12;
