@@ -5,7 +5,6 @@ export const Section = (props) => (
     <style jsx>{`
       .Section {
         border-bottom: 1px solid var(--grey-1);
-        height: 100vh;
         padding: 2rem;
       }
       `}
@@ -23,13 +22,7 @@ const SectionTitle = (props) => (
   </h2>
 )
 const SectionBody = (props) => (
-  <p className='Section__Body'>
+  <div className='Section__Body'>
     {props.children}
-    <style jsx>{`
-      .Section__Body {
-        margin: 0;
-      }
-      `}
-    </style>
-  </p>
+  </div>
 )

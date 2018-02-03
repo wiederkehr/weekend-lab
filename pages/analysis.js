@@ -4,7 +4,8 @@ import { LineChart, Line } from 'recharts'
 import { App } from '../components/App/App'
 import { Layout } from '../components/Layout/Layout'
 import { Head } from '../components/Head/Head'
-import { Page, PageHeader, PageBody, PageSection } from '../components/Page/Page'
+import { Page, PageHeader, PageBody } from '../components/Page/Page'
+import { Section, SectionHeader, SectionBody } from '../components/Section/Section'
 import { GenderBalance } from '../components/Analysis/GenderBalance'
 import { RacingYears } from '../components/Analysis/RacingYears'
 import { RankingOverTime } from '../components/Analysis/RankingOverTime'
@@ -62,22 +63,18 @@ export default class Analysis extends React.Component {
         <Page>
           <PageHeader title='Greyhound Race Analysis' />
           <PageBody>
-            <PageSection>
-              <h2>Gender Balance</h2>
+            <Section title='Gender Balance'>
               <GenderBalance data={this.state.rankings} />
-            </PageSection>
-            <PageSection>
-              <h2>Racing Years</h2>
+            </Section>
+            <Section title='Racing Years'>
               <RacingYears data={this.state.rankings} />
-            </PageSection>
-            <PageSection>
-              <h2>Ranking Over Time</h2>
+            </Section>
+            <Section title='Ranking Over Time'>
               <RankingOverTime data={this.state.rankings} />
-            </PageSection>
-            <PageSection>
-              <h2>Ranking Over Season</h2>
+            </Section>
+            <Section title='Ranking Over Season'>
               <RankingOverSeason data={this.state.rankings} />
-            </PageSection>
+            </Section>
           </PageBody>
         </Page>
       </App>
