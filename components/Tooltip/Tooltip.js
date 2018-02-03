@@ -1,6 +1,6 @@
 export const Tooltip = (props) => {
   return (
-    <div className={'Tooltip'} style={{ left: props.left ? props.left : 0, top: props.top ? props.top : 0}}>
+    <div className={'Tooltip'} style={{ left: props.left, top: props.top}}>
       <div className='Tooltip__Section Tooltip__Section--first'>
         <span className='Tooltip__Title'>{ props.name }</span>
       </div>
