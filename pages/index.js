@@ -19,7 +19,7 @@ const countryNames = {
 export default class Index extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { rankings: null, view: 'A', tooltip: null }
+    this.state = { rankings: null, view: 1, tooltip: null }
     this.onViewEnter = this.onViewEnter.bind(this)
     this.showTooltip = this.showTooltip.bind(this)
     this.hideTooltip = this.hideTooltip.bind(this)
@@ -98,28 +98,28 @@ export default class Index extends React.Component {
                 </StickyGraphic>
               </Sticky>
               <Scrolly>
-                <ScrollyView view='A' onViewEnter={this.onViewEnter}>
-                  <Section title='A: All Dogs, All Races'>
+                <ScrollyView view={1} onViewEnter={this.onViewEnter}>
+                  <Section title='1: All Dogs, All Races'>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                   </Section>
                 </ScrollyView>
-                <ScrollyView view='B' onViewEnter={this.onViewEnter}>
-                  <Section title='B: Gender Balance'>
+                <ScrollyView view={2} onViewEnter={this.onViewEnter}>
+                  <Section title='2: Gender Balance'>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                   </Section>
                 </ScrollyView>
-                <ScrollyView view='C' onViewEnter={this.onViewEnter}>
-                  <Section title='C: Age Distribution'>
+                <ScrollyView view={3} onViewEnter={this.onViewEnter}>
+                  <Section title='3: Age Distribution'>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                   </Section>
                 </ScrollyView>
-                <ScrollyView view='D' onViewEnter={this.onViewEnter}>
-                  <Section title='D: Repeated Winners'>
+                <ScrollyView view={4} onViewEnter={this.onViewEnter}>
+                  <Section title='4: Repeated Winners'>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                   </Section>
                 </ScrollyView>
-                <ScrollyView view='E' onViewEnter={this.onViewEnter}>
-                  <Section title='E: Parents & Kids'>
+                <ScrollyView view={5} onViewEnter={this.onViewEnter}>
+                  <Section title='5: Parents & Kids'>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                   </Section>
                 </ScrollyView>
