@@ -1,4 +1,5 @@
 import classNames from 'classnames'
+import { CSSTransition } from 'react-transition-group'
 
 export class Champion extends React.PureComponent {
   constructor(props) {
