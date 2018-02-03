@@ -5,10 +5,10 @@ import { App } from '../components/App/App'
 import { Layout } from '../components/Layout/Layout'
 import { Head } from '../components/Head/Head'
 import { Page, PageHeader, PageBody, PageSection } from '../components/Page/Page'
-import { GenderBalance } from '../components/Visualizations/GenderBalance'
-import { RacingYears } from '../components/Visualizations/RacingYears'
-import { RankingOverTime } from '../components/Visualizations/RankingOverTime'
-import { RankingOverSeason } from '../components/Visualizations/RankingOverSeason'
+import { GenderBalance } from '../components/Analysis/GenderBalance'
+import { RacingYears } from '../components/Analysis/RacingYears'
+import { RankingOverTime } from '../components/Analysis/RankingOverTime'
+import { RankingOverSeason } from '../components/Analysis/RankingOverSeason'
 
 const countryNames = {
   IE: 'Ireland',
