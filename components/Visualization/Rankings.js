@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
 import { map, nest, max, min, scaleLinear, scaleOrdinal, scalePoint, interpolateHcl } from 'd3'
-import { XRay } from '../Utilities/XRay'
 import { Champions } from './Champions'
 import { Careers } from './Careers'
 import { Axes } from '../Axis/Axes'
@@ -8,17 +7,20 @@ import { Axes } from '../Axis/Axes'
 export class Rankings extends React.PureComponent {
   constructor(props) {
     super(props)
+    console.log(props.data)
+    const series = this.deriveSeries(props.data)
+    const sires = this.deriveParents(props.data)
     const margins = {
       top: 20,
-      right: 20,
+      right: 40,
       bottom: 20,
       left: 40
     }
     const extents = {
       sexes: map(props.data, (d) => d.Sex).keys(),
       years: map(props.data, (d) => d.Year).keys(),
-      yearMin: min(props.data, (d) => d.Year),
-      yearMax: max(props.data, (d) => d.Year),
+      yearsMin: min(series, (s) => s.Years.length),
+      yearsMax: max(series, (s) => s.Years.length),
       rankMin: min(props.data, (d) => d.Rank),
       rankMax: max(props.data, (d) => d.Rank),
       ageMin: min(props.data, (d) => d.Age),
@@ -28,7 +30,6 @@ export class Rankings extends React.PureComponent {
     }
     const dimensions = this.calculateDimensions(props, margins)
     const scales = this.calculateScales(props, extents, dimensions)
-    const series = this.deriveSeries(props.data)
     this.state = {
       margins: margins,
       extents: extents,
@@ -47,6 +48,9 @@ export class Rankings extends React.PureComponent {
     const yearScale = scalePoint()
       .domain(extents.years)
       .range([0, dimensions.width])
+    const careerScale = scaleLinear()
+      .domain([0, extents.yearsMax])
+      .range([0, yearScale.step() / 2])
     const rankScale = scaleLinear()
       .domain([extents.rankMin, extents.rankMax])
       .range([0, dimensions.height])
@@ -60,8 +64,10 @@ export class Rankings extends React.PureComponent {
     const racesScale = scaleLinear()
       .domain([extents.racesMin, extents.racesMax])
       .range([2, yearScale.step() / 2])
+
     return {
       yearScale: yearScale,
+      careerScale: careerScale,
       rankScale: rankScale,
       ageScale: ageScale,
       sexScale: sexScale,
@@ -69,14 +75,32 @@ export class Rankings extends React.PureComponent {
     }
   }
   deriveSeries(data) {
-    let series = nest()
+    const series = nest()
       .key(d => d.Name)
-      .rollup(v => v.map((d,i) => ({ Year: d.Year, Rank: d.Rank, Sex: d.Sex })))
+      .rollup(v => v.map((d,i) => ({ Year: d.Year, Rank: d.Rank })))
       .entries(data)
-      .map(d => ({ Name: d.key, Years: d.value, Sex: d.value[0].Sex }))
+      .map(d => ({ Name: d.key, Years: d.value }))
       .filter(d => d.Years.length > 1)
-    console.log(series)
     return series
+  }
+  deriveParents(data) {
+    const sires = nest()
+      .key(d => d.Sire)
+      .rollup(v => ({ Children: v.length }))
+      .entries(data)
+      .map(d => ({ Sire: d.key, Children: d.value.Children }))
+      .sort((a, b) => b.Children - a.Children)
+      .slice(0,3)
+
+    const dams = nest()
+      .key(d => d.Dam)
+      .rollup(v => ({ Children: v.length }))
+      .entries(data)
+      .map(d => ({ Dam: d.key, Children: d.value.Children }))
+      .sort((a, b) => b.Children - a.Children)
+      .slice(0,3)
+
+    return {Sires: sires, Dams: dams}
   }
   componentWillReceiveProps(nextProps) {
     if(this.props.width !== nextProps.width) {
@@ -94,18 +118,20 @@ export class Rankings extends React.PureComponent {
       height: this.state.dimensions.height,
       width: this.state.dimensions.width,
       xScale: this.state.scales.yearScale,
-      yScale: this.state.scales.rankScale
+      yScale: this.state.scales.rankScale,
     }
     const championsProps = {
       view: this.props.view,
       data: this.props.data,
+      series: this.state.series,
       xScale: this.state.scales.yearScale,
       yScale: this.state.scales.rankScale,
       ageScale: this.state.scales.ageScale,
       sexScale: this.state.scales.sexScale,
       racesScale: this.state.scales.racesScale,
+      careerScale: this.state.scales.careerScale,
       onMouseOut: this.props.onMouseOut,
-      onMouseOver: this.props.onMouseOver
+      onMouseOver: this.props.onMouseOver,
     }
     const careersProps = {
       view: this.props.view,
@@ -115,19 +141,17 @@ export class Rankings extends React.PureComponent {
     }
     return (
       <div className='Champions'>
-        <XRay {...this.props}/>
         <svg
           width={this.state.dimensions.width + this.state.margins.left + this.state.margins.right}
           height={this.state.dimensions.height + this.state.margins.top + this.state.margins.bottom}>
           <g transform={`translate(${this.state.margins.left}, ${this.state.margins.top})`}>
             <Axes {...axesProps} />
+            { this.props.view === 5 ? <Careers {...careersProps} /> : null }
             <Champions {...championsProps} />
-            <Careers {...careersProps} />
           </g>
         </svg>
         <style jsx>{`
           .Champions {
-            background: var(--grey-4);
             line-height: 1;
             position: relative;
           }
