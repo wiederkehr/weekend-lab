@@ -114,12 +114,17 @@ export default class Index extends React.Component {
                   </Section>
                 </ScrollyView>
                 <ScrollyView view={4} onViewEnter={this.onViewEnter}>
-                  <Section title='4: Repeated Winners'>
+                  <Section title='4: Amount of Races'>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                   </Section>
                 </ScrollyView>
                 <ScrollyView view={5} onViewEnter={this.onViewEnter}>
-                  <Section title='5: Parents & Kids'>
+                  <Section title='5: Repeated Winners'>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                  </Section>
+                </ScrollyView>
+                <ScrollyView view={6} onViewEnter={this.onViewEnter}>
+                  <Section title='6: Parents & Kids'>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                   </Section>
                 </ScrollyView>
