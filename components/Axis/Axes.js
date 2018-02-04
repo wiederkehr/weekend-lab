@@ -1,3 +1,4 @@
+import { format } from 'd3'
 import { Axis } from './Axis'
 
 export const Axes = (props) => {
@@ -5,14 +6,14 @@ export const Axes = (props) => {
     translate: 'translate(0,' + props.height + ')',
     scale: props.xScale,
     orient: 'bottom',
-    tickSize: -(props.height)
+    tickSize: -(props.height),
   }
   const ySettings = {
     translate: 'translate(0, 0)',
     scale: props.yScale,
     orient: 'left',
-    ticks: 1,
-    tickSize: -(props.width)
+    ticks: 10,
+    tickSize: -(props.width),
   }
   return (
     <g className="xy-axis">
