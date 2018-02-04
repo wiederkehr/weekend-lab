@@ -17,7 +17,6 @@ export const Sticky = (props) => (
     {props.children}
     <style jsx>{`
       .Sticky {
-        background: var(--grey-2);
         flex-grow: 1;
         flex-shrink: 0;
         height: 100vh;
@@ -97,11 +96,11 @@ export class ScrollyView extends React.Component {
   render() {
     return (
       <Waypoint
-          onEnter={this.onWaypointEnter}
-          onLeave={this.onWaypointLeave}
-          topOffset='49.999%'
-          bottomOffset='50%'>
-          <div style={{background: this.state.active ? 'var(--white)' : 'var(--grey-2)'}}>
+        onEnter={this.onWaypointEnter}
+        onLeave={this.onWaypointLeave}
+        topOffset='49.999%'
+        bottomOffset='50%'>
+        <div>
           {this.props.children}
         </div>
       </Waypoint>

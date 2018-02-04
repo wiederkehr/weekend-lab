@@ -13,7 +13,7 @@ export const PageHeader = (props) => (
     <h1>{props.title}</h1>
     <style jsx>{`
       .Page__Header {
-        background: var(--grey-1);
+        border-bottom: 1px solid var(--grey-1);
         padding: 2rem;
       }
       `}
@@ -36,7 +36,6 @@ export const PageFooter = (props) => (
     {props.children}
     <style jsx>{`
       .Page__Footer {
-        background: var(--grey-1);
         padding: 2rem;
       }
       `}

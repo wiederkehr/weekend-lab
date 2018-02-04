@@ -28,15 +28,16 @@ export class App extends React.Component {
           }
 
           :global(html, body){
-            margin: 0;
-            padding: 0;
+            background: var(--grey-1);
+            color: var(--black);
             font-family: 'Roboto Mono', monospace;
             font-weight: 400;
+            height: 100%;
+            margin: 0;
+            padding: 0;
             text-rendering: optimizeLegibility;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            color: var(--ixt-dark-grey);
-            height: 100%;
           }
 
           :global(h1, h2, h3, h4, h5, h6) {
