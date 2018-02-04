@@ -5,7 +5,7 @@ import { App } from '../components/App/App'
 import { Layout } from '../components/Layout/Layout'
 import { Head } from '../components/Head/Head'
 import { Page, PageHeader, PageBody } from '../components/Page/Page'
-import { Section, SectionHeader, SectionBody } from '../components/Section/Section'
+import { PageSection, PageSectionTitle } from '../components/Page/PageSection'
 import { GenderBalance } from '../components/Analysis/GenderBalance'
 import { RacingYears } from '../components/Analysis/RacingYears'
 import { RankingOverTime } from '../components/Analysis/RankingOverTime'
@@ -38,7 +38,7 @@ export default class Analysis extends React.Component {
         Birthyear: parseInt(row.Birthyear),
         Dam: row.Dam,
         Link: row.Link,
-        Name: row.Name,
+        Name: row.Name.trim(),
         Races: parseInt(row.Races),
         Rank: parseInt(row.Rank),
         Sex: row.Sex,
@@ -63,18 +63,22 @@ export default class Analysis extends React.Component {
         <Page>
           <PageHeader title='Greyhound Race Analysis' />
           <PageBody>
-            <Section title='Gender Balance'>
+            <PageSection>
+              <PageSectionTitle>Gender Balance</PageSectionTitle>
               <GenderBalance data={this.state.rankings} />
-            </Section>
-            <Section title='Racing Years'>
+            </PageSection>
+            <PageSection>
+              <PageSectionTitle>Racing Years</PageSectionTitle>
               <RacingYears data={this.state.rankings} />
-            </Section>
-            <Section title='Ranking Over Time'>
+            </PageSection>
+            <PageSection>
+              <PageSectionTitle>Ranking Over Time</PageSectionTitle>
               <RankingOverTime data={this.state.rankings} />
-            </Section>
-            <Section title='Ranking Over Season'>
+            </PageSection>
+            <PageSection>
+              <PageSectionTitle>Ranking Over Season</PageSectionTitle>
               <RankingOverSeason data={this.state.rankings} />
-            </Section>
+            </PageSection>
           </PageBody>
         </Page>
       </App>
