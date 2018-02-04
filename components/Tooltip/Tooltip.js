@@ -40,7 +40,7 @@ export const Tooltip = (props) => {
         	content: '';
         	margin-left: -10px;
         	position: absolute;
-        	top: 100%;
+        	top: calc(100% - 1px);
         	left: 50%;
         	width: 0;
         	height: 0;
