@@ -7,11 +7,14 @@ export class Champion extends React.PureComponent {
       hover: false,
       positions: {
         positionX: props.xScale(props.champion.Year),
-        positionY: props.yScale(props.champion.Rank)
+        positionY: props.yScale(props.champion.Rank),
       },
       colors: {
         ageColor: props.ageScale(props.champion.Age),
-        sexColor: props.sexScale(props.champion.Sex)
+        sexColor: props.sexScale(props.champion.Sex),
+      },
+      sizes: {
+        racesSize: props.racesScale(props.champion.Races),
       }
     }
   }
@@ -38,6 +41,9 @@ export class Champion extends React.PureComponent {
       break
       case 4:
         return 'REBECCAPURPLE'
+      break
+      case 5:
+        return 'GOLD'
       break
       case 5:
         return 'ORANGERED'
@@ -76,12 +82,20 @@ export class Champion extends React.PureComponent {
         'Circle__Back--hover': this.state.hover
       })
     }
+    const racesCircleProps = {
+      style: { fill: color, r: this.props.view === 4 ? this.state.sizes.racesSize : 2 },
+      className: classNames({
+        'Circle__Races': true,
+        'Circle__Races--hover': this.state.hover
+      })
+    }
     const groupProps = {
       transform: `translate(${this.state.positions.positionX},${this.state.positions.positionY})`
     }
     return (
       <g {...groupProps} >
         <circle {...backCircleProps} />
+        <circle {...racesCircleProps} />
         <circle {...centerCircleProps} />
         <circle {...frontCircleProps} />
         <style jsx>{`
@@ -93,6 +107,10 @@ export class Champion extends React.PureComponent {
           .Circle__Center {
             r: 2;
             transition: fill 2000ms ease-in-out;
+          }
+          .Circle__Races {
+            opacity: 0.4;
+            transition: fill 2000ms ease-in-out, r 2000ms ease-in-out;
           }
           .Circle__Back {
             opacity: 0.4;
