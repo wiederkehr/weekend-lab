@@ -29,8 +29,9 @@ export class Career extends React.PureComponent {
         <style jsx>{`
           .Line {
             fill: none;
-            stroke: #aaa;
-            stroke-weight: 2px;
+            opacity: 0.5;
+            stroke: var(--grey-8);
+            stroke-width: 4px;
           }
         `}</style>
       </g>
