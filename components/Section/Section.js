@@ -5,6 +5,7 @@ export const Section = (props) => (
     <style jsx>{`
       .Section {
         border-bottom: 1px solid var(--grey-1);
+        height: 80vh;
         padding: 2rem;
       }
       `}
