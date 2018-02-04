@@ -3,6 +3,7 @@ import classNames from 'classnames'
 export class Champion extends React.PureComponent {
   constructor(props) {
     super(props)
+    const career = this.findCareer(props.series)
     this.state = {
       hover: false,
       positions: {
@@ -14,6 +15,8 @@ export class Champion extends React.PureComponent {
         sexColor: props.sexScale(props.champion.Sex),
       },
       sizes: {
+        normalSize: 3,
+        careerSize: props.careerScale(career.length),
         racesSize: props.racesScale(props.champion.Races),
       }
     }
@@ -27,6 +30,16 @@ export class Champion extends React.PureComponent {
     this.props.onMouseOut()
     this.setState({hover: false})
     return
+  }
+  findCareer = (series) => {
+    const career = series.filter((s) => {
+      return s.Name === this.props.champion.Name
+    })
+    if(career.length > 0) {
+      return career[0].Years
+    }else{
+      return []
+    }
   }
   getColor = (view) => {
     switch(view) {
@@ -43,9 +56,9 @@ export class Champion extends React.PureComponent {
         return 'REBECCAPURPLE'
       break
       case 5:
-        return 'GOLD'
+        return 'FIREBRICK'
       break
-      case 5:
+      case 6:
         return 'ORANGERED'
       break
       default:
@@ -53,11 +66,58 @@ export class Champion extends React.PureComponent {
       break
     }
   }
+  getSizes = (view) => {
+    switch(view) {
+      case 1:
+        return {
+          point: this.state.sizes.normalSize,
+          value: this.state.sizes.normalSize
+        }
+      break
+      case 2:
+        return {
+          point: this.state.sizes.normalSize,
+          value: this.state.sizes.normalSize
+        }
+      break
+      case 3:
+        return {
+          point: this.state.sizes.normalSize,
+          value: this.state.sizes.normalSize
+        }
+      break
+      case 4:
+        return {
+          point: 1,
+          value: this.state.sizes.racesSize
+        }
+      break
+      case 5:
+        return {
+          point: 1,
+          value: this.state.sizes.careerSize
+        }
+      break
+      case 6:
+        return {
+          point: this.state.sizes.normalSize,
+          value: this.state.sizes.normalSize
+        }
+      break
+      default:
+        return {
+          point: this.state.sizes.normalSize,
+          value: this.state.sizes.normalSize
+        }
+      break
+    }
+  }
   render = () => {
 
-    let color = this.getColor(this.props.view)
+    const color = this.getColor(this.props.view)
+    const sizes = this.getSizes(this.props.view)
 
-    const frontCircleProps = {
+    const targetCircleProps = {
       'data-name': this.props.champion.Name,
       'data-rank': this.props.champion.Rank,
       'data-age': this.props.champion.Age,
@@ -66,27 +126,27 @@ export class Champion extends React.PureComponent {
       'data-y': this.state.positions.positionY,
       onMouseOver: this.onMouseOver,
       onMouseOut: this.onMouseOut,
-      className: 'Circle__Front'
+      className: 'Circle__Target'
     }
-    const centerCircleProps = {
-      style: { fill: color },
+    const pointCircleProps = {
+      style: { fill: color, r: sizes.point },
       className: classNames({
-        'Circle__Center': true,
-        'Circle__Center--hover': this.state.hover
+        'Circle__Point': true,
+        'Circle__Point--hover': this.state.hover
       })
     }
-    const backCircleProps = {
+    const hoverCircleProps = {
       style: { fill: color },
       className: classNames({
-        'Circle__Back': true,
-        'Circle__Back--hover': this.state.hover
+        'Circle__Hover': true,
+        'Circle__Hover--hover': this.state.hover
       })
     }
-    const racesCircleProps = {
-      style: { fill: color, r: this.props.view === 4 ? this.state.sizes.racesSize : 2 },
+    const sizeCircleProps = {
+      style: { fill: color, r: sizes.value },
       className: classNames({
-        'Circle__Races': true,
-        'Circle__Races--hover': this.state.hover
+        'Circle__Size': true,
+        'Circle__Size--hover': this.state.hover
       })
     }
     const groupProps = {
@@ -94,30 +154,29 @@ export class Champion extends React.PureComponent {
     }
     return (
       <g {...groupProps} >
-        <circle {...backCircleProps} />
-        <circle {...racesCircleProps} />
-        <circle {...centerCircleProps} />
-        <circle {...frontCircleProps} />
+        <circle {...hoverCircleProps} />
+        <circle {...sizeCircleProps} />
+        <circle {...pointCircleProps} />
+        <circle {...targetCircleProps} />
         <style jsx>{`
-          .Circle__Front {
+          .Circle__Target {
             cursor: pointer;
             fill: transparent;
             r: 8;
           }
-          .Circle__Center {
-            r: 2;
-            transition: fill 2000ms ease-in-out;
+          .Circle__Point {
+            transition: fill 2000ms ease-in-out, r 2000ms ease-in-out;
           }
-          .Circle__Races {
+          .Circle__Size {
             opacity: 0.4;
             transition: fill 2000ms ease-in-out, r 2000ms ease-in-out;
           }
-          .Circle__Back {
+          .Circle__Hover {
             opacity: 0.4;
-            r: 2;
+            r: 0;
             transition: fill 2000ms ease-in-out, r 200ms ease-in-out;
           }
-          .Circle__Back.Circle__Back--hover {
+          .Circle__Hover.Circle__Hover--hover {
             r: 12;
           }
         `}</style>
