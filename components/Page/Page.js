@@ -3,6 +3,8 @@ export const Page = (props) => (
     {props.children}
     <style jsx>{`
       .Page {
+        max-width: 1280px;
+        margin: 0 auto;
       }
       `}
     </style>
