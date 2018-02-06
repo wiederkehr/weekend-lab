@@ -50,7 +50,7 @@ export class Rankings extends React.PureComponent {
       .range([0, dimensions.width])
     const careerScale = scaleLinear()
       .domain([0, extents.yearsMax])
-      .range([0, yearScale.step() / 2])
+      .range([0, yearScale.step() / 4])
     const rankScale = scaleLinear()
       .domain([extents.rankMin, extents.rankMax])
       .range([0, dimensions.height])
