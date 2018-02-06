@@ -1,6 +1,16 @@
+import classNames from 'classnames'
+
 export const Tooltip = (props) => {
+  const className = classNames({
+    'Tooltip': true,
+    'Tooltip--top': props.rank >= 50,
+    'Tooltip--bottom': props.rank < 50,
+    'Tooltip--left': props.year > 2013,
+    'Tooltip--right': props.year < 2005,
+  })
+  console.log(className);
   return (
-    <div className={'Tooltip'} style={{ left: props.left, top: props.top}}>
+    <div className={className} style={{ left: props.left, top: props.top}}>
       <div className='Tooltip__Section Tooltip__Section--first'>
         <span className='Tooltip__Title'>{ props.name }</span>
       </div>
@@ -33,6 +43,24 @@ export const Tooltip = (props) => {
           transform: translate(-50%, calc(-100% - 20px));
           width: 300px;
         }
+        .Tooltip--bottom                {
+          transform: translate(-50%, calc(0% + 20px));
+        }
+        .Tooltip--bottom.Tooltip--left  {
+          transform: translate(calc(-100% + 20px), calc(0% + 20px));
+        }
+        .Tooltip--bottom.Tooltip--right {
+          transform: translate(calc(0% - 20px), calc(0% + 20px));
+        }
+        .Tooltip--top                   {
+          transform: translate(-50%, calc(-100% - 20px));
+        }
+        .Tooltip--top.Tooltip--left     {
+          transform: translate(calc(-100% + 20px), calc(-100% - 20px));
+        }
+        .Tooltip--top.Tooltip--right    {
+          transform: translate(calc(0% - 20px), calc(-100% - 20px));
+        }
 
         .Tooltip:after {
         	border: 10px solid transparent;
@@ -45,6 +73,19 @@ export const Tooltip = (props) => {
         	width: 0;
         	height: 0;
           pointer-events: none;
+        }
+
+        .Tooltip--bottom:after {
+          top: -19px;
+          transform: rotate(180deg);
+        }
+        .Tooltip--left:after {
+          left: calc(100% - 20px);
+          right: auto;
+        }
+        .Tooltip--right:after {
+          left: auto;
+          right: calc(100% - 30px);
         }
 
         .Tooltip__Section {
