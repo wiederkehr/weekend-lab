@@ -120,6 +120,7 @@ export class Champion extends React.PureComponent {
     const targetCircleProps = {
       'data-name': this.props.champion.Name,
       'data-rank': this.props.champion.Rank,
+      'data-year': this.props.champion.Year,
       'data-age': this.props.champion.Age,
       'data-sex': this.props.champion.Sex,
       'data-x': this.state.positions.positionX,
